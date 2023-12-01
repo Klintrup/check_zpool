@@ -2,6 +2,8 @@ on:
   pull_request:
 
 name: lint
+permissions:
+  contents: write
 
 jobs:
   shellcheck:
