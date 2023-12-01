@@ -5,6 +5,10 @@
 # version 1.x
 
 PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+unset ERRORSTRING
+unset OKSTRING
+unset ERR
+
 if [ -x "/sbin/zpool" ]
 then
  DEVICES="$(zpool list -H -o name)"
@@ -12,13 +16,10 @@ else
  ERRORSTRING="zpool binary does not exist on system"
  ERR=3
 fi
-unset ERRORSTRING
-unset OKSTRING
-unset ERR
 
 for DEVICE in ${DEVICES}
 do
- DEVICESTRING="$(zpool list -H -o health ${DEVICE})"
+ DEVICESTRING="$(zpool list -H -o health "${DEVICE}")"
  if [ "$(echo "${DEVICESTRING}"|tr '[:upper:]' '[:lower:]'|sed -Ee 's/.*(degraded|faulted|offline|online|removed|unavail).*/\1/')" = "" ]
  then
   ERRORSTRING="${ERRORSTRING} / ${DEVICE}: unknown state"
