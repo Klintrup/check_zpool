@@ -1,4 +1,4 @@
-# monitor zfs from nagios/NRPE
+# monitor zfs from nagios/NRPE or cron on FreeBSD
 
 ## Synopsis
 
@@ -7,8 +7,10 @@ Simple check-script for nrpe/nagios to get the status of various zpool volumes i
 ## Syntax
 
 ``` bash
-check_zpool.sh
+check_zpool.sh [email] [email]
 ```
+
+If no arguments are specified, the script will assume its run for NRPE. If one or more email addresses are specified, the script will send an email in case an array reports an error.
 
 ## Output
 
@@ -29,4 +31,4 @@ Failed/rebuilding volumes will always be first in the output string, to help dia
 
 Should work on all versions of FreeBSD with zfs.
 
-Tested on FreeBSD 8.0-10.1
+Tested on FreeBSD 8.0-9.0

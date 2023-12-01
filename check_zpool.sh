@@ -2,10 +2,16 @@
 # NRPE check for zpool
 # Written by: Søren Klintrup <github at klintrup.dk>
 # Get your copy from https://github.com/Klintrup/check_zpool
-# version 1.0
+# version 1.1
 
 PATH="/sbin:/bin:/usr/sbin:/usr/bin"
-DEVICES="$(zpool list -H -o name)"
+if [ -x "/sbin/zpool" ]
+then
+ DEVICES="$(zpool list -H -o name)"
+else
+ ERRORSTRING="zpool binary does not exist on system"
+ ERR=3
+fi
 unset ERRORSTRING
 unset OKSTRING
 unset ERR
@@ -49,11 +55,19 @@ do
    esac
  fi
 done
-if [ "${ERRORSTRING}" -o "${OKSTRING}" ]
+if [ "${1}" ]
 then
- echo ${ERRORSTRING} ${OKSTRING}|sed s/"^\/ "//
- exit ${ERR}
+ if [ "${ERRORSTRING}" ]
+ then
+  echo "${ERRORSTRING} ${OKSTRING}"|sed s/"^\/ "//|mail -s "$(hostname -s): ${0} reports errors" -E ${*}
+ fi
 else
- echo no zpool volumes found
- exit 3
+ if [ "${ERRORSTRING}" -o "${OKSTRING}" ]
+ then
+  echo "${ERRORSTRING} ${OKSTRING}"|sed s/"^\/ "//
+  exit ${ERR}
+ else
+  echo no zpool volumes found
+  exit 3
+ fi
 fi
