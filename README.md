@@ -1,4 +1,4 @@
-# monitor zfs from nagios/NRPE or cron on FreeBSD
+# monitor zfs from nagios/NRPE
 
 ## Synopsis
 
@@ -7,10 +7,8 @@ Simple check-script for nrpe/nagios to get the status of various zpool volumes i
 ## Syntax
 
 ``` bash
-check_zpool.sh [email] [email]
+check_zpool.sh
 ```
-
-If no arguments are specified, the script will assume its run for NRPE. If one or more email addresses are specified, the script will send an email in case an array reports an error.
 
 ## Output
 
