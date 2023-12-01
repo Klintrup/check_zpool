@@ -6,7 +6,7 @@ Simple check-script for nrpe/nagios to get the status of various zpool volumes i
 
 ## Syntax
 
-``` bash
+```bash
 check_zpool.sh [email] [email]
 ```
 
