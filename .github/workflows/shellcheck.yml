@@ -1,10 +1,7 @@
 on:
   pull_request:
-    target:
-      - main
 
-name: "Trigger: Push action"
-permissions: {}
+name: "shellcheck"
 
 jobs:
   shellcheck:
