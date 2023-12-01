@@ -2,7 +2,7 @@
 # NRPE check for zpool
 # Written by: Søren Klintrup <github at klintrup.dk>
 # Get your copy from https://github.com/Klintrup/check_zpool
-# version 1.1
+# version 1.2
 
 PATH="/sbin:/bin:/usr/sbin:/usr/bin"
 if [ -x "/sbin/zpool" ]
@@ -64,7 +64,7 @@ then
 else
  if [ "${ERRORSTRING}" -o "${OKSTRING}" ]
  then
-  echo "${ERRORSTRING} ${OKSTRING}"|sed s/"^\/ "//
+  echo "${ERRORSTRING} ${OKSTRING}"|sed -E s/"^[[:blank:]]{1,}\/ "//
   exit ${ERR}
  else
   echo no zpool volumes found

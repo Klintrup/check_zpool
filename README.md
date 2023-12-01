@@ -31,4 +31,4 @@ Failed/rebuilding volumes will always be first in the output string, to help dia
 
 Should work on all versions of FreeBSD with zfs.
 
-Tested on FreeBSD 8.0-9.0
+Tested on FreeBSD 8.0-10.1
