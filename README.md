@@ -1,8 +1,15 @@
 # monitor zfs from nagios/NRPE or cron on FreeBSD
 
+[![CodeFactor](https://www.codefactor.io/repository/github/klintrup/check_zpool/badge)](https://www.codefactor.io/repository/github/klintrup/check_zpool)
+[![License Apache 2.0](https://img.shields.io/github/license/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/blob/main/LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/releases)
+[![Contributors](https://img.shields.io/github/contributors-anon/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/issues)
+[![build](https://img.shields.io/github/actions/workflow/status/Klintrup/check_zpool/shellcheck.yml)](https://github.com/Klintrup/check_zpool/actions/workflows/shellcheck.yml)
+
 ## Synopsis
 
-Simple check-script for nrpe/nagios to get the status of various zpool volumes in a box, and output the failed volumes if any such exist.
+Simple check-script for NRPE/nagios to get the status of various zpool volumes in a box, and output the failed volumes if any such exist.
 
 ## Syntax
 
@@ -16,7 +23,7 @@ If no arguments are specified, the script will assume its run for NRPE. If one o
 
 `tank: DEGRADED / data: rebuilding / system: ok`
 
-Failed/rebuilding volumes will always be first in the output string, to help diagnose the problem when recieving the output via pager/sms.
+Failed/rebuilding volumes will always be first in the output string, to help diagnose the problem when receiving the output via pager/sms.
 
 ## Output examples
 
@@ -27,7 +34,7 @@ Failed/rebuilding volumes will always be first in the output string, to help dia
 | rebuilding    | The RAID is rebuilding, will return to OK when done                                                                             |
 | unknown state | Volume is in an unknown state. Please report this as an issue on [GitHub](https://github.com/Klintrup/check_zpool/issues)       |
 
-## Compability
+## Compatibility
 
 Should work on all versions of FreeBSD with zfs.
 
