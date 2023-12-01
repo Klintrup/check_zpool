@@ -1,0 +1,22 @@
+on:
+  pull_request:
+
+name: lint-shell
+permissions:
+  contents: write
+
+jobs:
+  sh:
+    name: sh-noexec-verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        run: sh -n check_zpool.sh
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0

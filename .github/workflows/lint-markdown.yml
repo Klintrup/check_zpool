@@ -1,19 +1,12 @@
 on:
   pull_request:
 
-name: lint
+name: lint-markdown
 permissions:
   contents: write
 
 jobs:
-  shellcheck:
-    name: Shellcheck
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@2.0.0
-  prettier_markdown:
+  prettier:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
