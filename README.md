@@ -1,6 +1,7 @@
 # monitor zfs from nagios/NRPE or cron on FreeBSD
 
 [![CodeFactor](https://www.codefactor.io/repository/github/klintrup/check_zpool/badge)](https://www.codefactor.io/repository/github/klintrup/check_zpool)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/af682a2e5ff34d13b4fba76798eb37a8)](https://app.codacy.com/gh/Klintrup/check_zpool/dashboard)
 [![License Apache 2.0](https://img.shields.io/github/license/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/blob/main/LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/releases)
 [![Contributors](https://img.shields.io/github/contributors-anon/Klintrup/check_zpool)](https://github.com/Klintrup/check_zpool/graphs/contributors)
