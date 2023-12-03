@@ -7,12 +7,11 @@ permissions:
 
 jobs:
   sh:
-    name: sh-noexec-verify
+    name: simple-shell-syntax-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run ShellCheck
-        run: sh -n check_zpool.sh
+      - uses: Klintrup/simple-shell-syntax-check@v1
   shellcheck:
     name: shellcheck
     runs-on: ubuntu-latest
