@@ -1,0 +1,90 @@
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+name: lint
+
+permissions:
+  contents: read
+
+jobs:
+  list-files:
+    name: Find changed files
+    runs-on: ubuntu-latest
+    outputs:
+      sh-changed-files:  ${{ steps.changed-files-sh.outputs.all_changed_files }}
+      sh-any-changed:    ${{ steps.changed-files-sh.outputs.any_changed }}
+      md-changed-files:  ${{ steps.changed-files-md.outputs.all_changed_files }}
+      md-any-changed:    ${{ steps.changed-files-md.outputs.any_changed }}
+      yml-changed-files: ${{ steps.changed-files-yml.outputs.all_changed_files }}
+      yml-any-changed:   ${{ steps.changed-files-yml.outputs.any_changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Get changed SH files
+        id: changed-files-sh
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            **.sh
+      - name: Get changed MD files
+        id: changed-files-md
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+             **.md
+      - name: Get changed YAML files
+        id: changed-files-yml
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+             **.yml
+             **.yaml
+  sh-check-changed:
+    name: Check changed shellscripts
+    needs: list-files
+    if:    needs.list-files.outputs.sh-any-changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntax
+        uses: Klintrup/simple-shell-syntax-check@v2.2.0
+        with:
+          files: ${{ needs.list-files.outputs.sh-changed-files }}
+          install_missing_shell: true
+  prettier-md:
+    name: Prettify changed markdown files
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    if:   needs.list-files.outputs.md-any-changed == 'true'
+    needs: list-files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write ${{ needs.list-files.outputs.md-changed-files }}
+  prettier-yml:
+    name: Prettify changed markdown files
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    if:   needs.list-files.outputs.yml-any-changed == 'true'
+    needs: list-files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write ${{ needs.list-files.outputs.yml-changed-files }}
