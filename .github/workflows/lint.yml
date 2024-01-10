@@ -18,8 +18,6 @@ jobs:
       sh-any-changed:    ${{ steps.changed-files-sh.outputs.any_changed }}
       md-changed-files:  ${{ steps.changed-files-md.outputs.all_changed_files }}
       md-any-changed:    ${{ steps.changed-files-md.outputs.any_changed }}
-      yml-changed-files: ${{ steps.changed-files-yml.outputs.all_changed_files }}
-      yml-any-changed:   ${{ steps.changed-files-yml.outputs.any_changed }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,16 +35,6 @@ jobs:
         with:
           files: |
              **.md
-      - name: Get changed YAML files
-        id: changed-files-yml
-        uses: tj-actions/changed-files@v40
-        with:
-          files: |
-             **.yml
-             **.yaml
-          files_ignore:
-             .github/workflows/*.yml
-             .github/workflows/*.yaml
   sh-check-changed:
     name: Check changed shellscripts
     needs: list-files
@@ -75,18 +63,4 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --write ${{ needs.list-files.outputs.md-changed-files }}
-  prettier-yml:
-    name: Prettify changed YAML files
-    permissions: write-all
-    runs-on: ubuntu-latest
-    if:   needs.list-files.outputs.yml-any-changed == 'true'
-    needs: list-files
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: --write ${{ needs.list-files.outputs.yml-changed-files }}
+
