@@ -73,9 +73,8 @@ jobs:
         with:
           prettier_options: --write ${{ needs.list-files.outputs.md-changed-files }}
   prettier-yml:
-    name: Prettify changed markdown files
-    permissions:
-      contents: write
+    name: Prettify changed YAML files
+    permissions: write-all
     runs-on: ubuntu-latest
     if:   needs.list-files.outputs.yml-any-changed == 'true'
     needs: list-files
