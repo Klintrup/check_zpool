@@ -45,8 +45,8 @@ jobs:
              **.yml
              **.yaml
           files_ignore:
-             .github/workflows/**.yml
-             .github/workflows/**.yaml
+             .github/workflows/*.yml
+             .github/workflows/*.yaml
   sh-check-changed:
     name: Check changed shellscripts
     needs: list-files
