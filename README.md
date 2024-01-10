@@ -9,7 +9,8 @@
 
 ## Synopsis
 
-Simple check-script for NRPE/nagios to get the status of various zpool volumes in a box, and output the failed volumes if any such exist.
+Simple check-script for NRPE/nagios to get the status of various zpool volumes 
+in a box, and output the failed volumes if any such exist.
 
 ## Syntax
 
@@ -17,13 +18,16 @@ Simple check-script for NRPE/nagios to get the status of various zpool volumes i
 check_zpool.sh [email] [email]
 ```
 
-If no arguments are specified, the script will assume its run for NRPE. If one or more email addresses are specified, the script will send an email in case an array reports an error.
+If no arguments are specified, the script will assume its run for NRPE. If one 
+or more email addresses are specified, the script will send an email in case an
+array reports an error.
 
 ## Output
 
 `tank: DEGRADED / data: rebuilding / system: ok`
 
-Failed/rebuilding volumes will always be first in the output string, to help diagnose the problem when receiving the output via pager/sms.
+Failed/rebuilding volumes will always be first in the output string, to help 
+diagnose the problem when receiving the output via pager/sms.
 
 ## Output examples
 
