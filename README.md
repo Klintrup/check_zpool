@@ -40,6 +40,6 @@ diagnose the problem when receiving the output via pager/sms.
 
 ## Compatibility
 
-Should work on all versions of FreeBSD with zfs.
+Should work on all versions of FreeBSD and Linux with zfs.
 
-Tested on FreeBSD 8.0-10.1
+Tested on FreeBSD 8.0+ and Ubuntu 22.04 LTS

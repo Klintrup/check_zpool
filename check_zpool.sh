@@ -8,6 +8,20 @@ unset ERRORSTRING
 unset OKSTRING
 unset ERR
 
+_validate_email() {
+  if [ -n "$_validate_email__input" ]; then
+    echo "_validate_email__input variable is already set" >&2
+    exit 1
+  fi
+  for _validate_email__input in "$@"; do
+    if ! echo "$_validate_email__input" | grep -qE '^[a-zA-Z0-9._%+-]{1,}@[a-zA-Z0-9.-]{1,}\.[a-zA-Z]{2,}$'; then
+      echo "$_validate_email__input is not a valid email address" >&2
+    else
+      echo "$_validate_email__input"
+    fi
+  done
+}
+
 if [ -x "/sbin/zpool" ]; then
   DEVICES="$(zpool list -H -o name)"
 else
@@ -48,9 +62,11 @@ for DEVICE in ${DEVICES}; do
     esac
   fi
 done
+
 if [ "${1}" ]; then
   if [ "${ERRORSTRING}" ]; then
-    echo "${ERRORSTRING} ${OKSTRING}" | sed s/"^\/ "// | mail -s "$(hostname -s): ${0} reports errors" -E "${*}"
+    recipients=$(validate_email "${@}")
+    echo "${ERRORSTRING} ${OKSTRING}" | sed s/"^\/ "// | mail -s "$(hostname -s): ${0} reports errors" -E "${recipients}"
   fi
 else
   if [ "${ERRORSTRING}" ] || [ "${OKSTRING}" ]; then
