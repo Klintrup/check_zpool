@@ -14,17 +14,26 @@ in a box, and output the failed volumes if any such exist.
 
 ## Syntax
 
+### Direct/integrate
 ```bash
 check_zpool.sh [email] [email]
 ```
 
-If no arguments are specified, the script will assume its run for NRPE. If one
-or more email addresses are specified, the script will send an email in case an
-array reports an error.
+If no arguments are specified, the script will assume its run for NRPE/Nagios/Zabbix.
+If one or more email addresses are specified, the script will send an email in case
+an array reports an error.
+
+### Cron
+
+```bash
+0 6 * * * root /path/to/check_zpool.sh first.user@organisation.com second.user@organisation.com 
+```
+
+This runs the script at 6 AM day and sends out an email if any of the zpools in the system has a status other than "online"
 
 ## Output
 
-`tank: DEGRADED / data: rebuilding / system: ok`
+`tank: FAULTED / data: degraded / system: online`
 
 Failed/rebuilding volumes will always be first in the output string, to help
 diagnose the problem when receiving the output via pager/sms.

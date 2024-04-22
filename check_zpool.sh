@@ -6,6 +6,7 @@
 PATH="/sbin:/bin:/usr/sbin:/usr/bin"
 ERR="0"
 unset ERRORSTRING
+unset WARNINGSTRING
 unset OKSTRING
 
 validate_email() {
@@ -77,10 +78,6 @@ for DEVICE in ${DEVICES}; do
     ERR=$(set_error_code "${ERR}" "unknown")
   else
     case $(echo "${DEVICESTRING}" | tr '[:upper:]' '[:lower:]' | sed -Ee 's/.*(degraded|faulted|suspended|offline|online|removed|unavail).*/\1/') in
-      degraded)
-        ERR=$(set_error_code "${ERR}" "warning")
-        ERRORSTRING="${ERRORSTRING} / ${DEVICE}: DEGRADED"
-        ;;
       faulted)
         ERR=$(set_error_code "${ERR}" "error")
         ERRORSTRING="${ERRORSTRING} / ${DEVICE}: FAULTED"
@@ -101,6 +98,10 @@ for DEVICE in ${DEVICES}; do
         ERR=$(set_error_code "${ERR}" "error")
         ERRORSTRING="${ERRORSTRING} / ${DEVICE}: UNAVAIL"
         ;;
+      degraded)
+        ERR=$(set_error_code "${ERR}" "warning")
+        WARNINGSTRING="${WARNINGSTRING} / ${DEVICE}: degraded"
+        ;;
       online)
         ERR=$(set_error_code "${ERR}" "ok")
         OKSTRING="${OKSTRING} / ${DEVICE}: online"
@@ -110,13 +111,13 @@ for DEVICE in ${DEVICES}; do
 done
 
 if [ "${1}" ]; then
-  if [ "${ERRORSTRING}" ]; then
+  if [ "${ERRORSTRING}" ] || [ "${WARNINGSTRING}" ]; then
     recipients=$(validate_email "${@}")
-    echo "${ERRORSTRING} ${OKSTRING}" | sed s/"^\/ "// | mail -s "$(hostname -s): ${0} reports errors" -E "${recipients}"
+    echo "${ERRORSTRING} ${WARNINGSTRING} ${OKSTRING}" | sed s/"^\/ "// | mail -s "$(hostname -s): ${0} reports errors" -E "${recipients}"
   fi
 else
-  if [ "${ERRORSTRING}" ] || [ "${OKSTRING}" ]; then
-    echo "${ERRORSTRING} ${OKSTRING}" | sed -E s/"^[[:blank:]]{1,}\/ "//
+  if [ "${ERRORSTRING}" ] || [ "${OKSTRING}" ] || [ "${WARNINGSTRING}" ]; then
+    echo "${ERRORSTRING} ${WARNINGSTRING} ${OKSTRING}" | sed -E s/"^[[:blank:]]{1,}\/ "//
     exit "${ERR}"
   else
     echo no zpool volumes found
