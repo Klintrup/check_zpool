@@ -46,4 +46,4 @@ diagnose the problem when receiving the output via pager/sms.
 
 Compatible with all versions of FreeBSD and Linux that support ZFS.
 
-Specifically tested on FreeBSD 8.0+ and Ubuntu 22.04 LTS.
+Specifically tested on FreeBSD 8.0+ and Ubuntu 22.04 LTS
