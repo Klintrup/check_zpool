@@ -41,16 +41,16 @@ diagnose the problem when receiving the output via pager/sms.
 
 ### Output states
 
-| output        | exit code | description                                                                                                               |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------- |
-| online        | 0         | The device is online and functioning normally.                                                                            |
-| degraded      | 1         | The device is experiencing a non-fatal fault, which may be causing degraded performance.                                  |
-| FAULTED       | 2         | An unrecoverable error has occurred. The device cannot be opened.                                                         |
-| OFFLINE       | 2         | The device has been taken offline by the administrator.                                                                   |
-| REMOVED       | 2         | The device was physically removed while the system was running.                                                           |
-| UNAVAIL       | 2         | The device cannot be opened because the system is currently running a resilvering or scrubbing operation.                 |
-| SUSPENDED     | 2         | The device is inaccessible, possibly because the system is in the process of resilvering or scrubbing the device.         |
-| UNKNOWN       | 3         | Volume is in an unknown state. Please report this as an issue on [GitHub](https://github.com/Klintrup/check_zpool/issues) |
+| output    | exit code | description                                                                                                               |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| online    | 0         | The device is online and functioning normally.                                                                            |
+| degraded  | 1         | The device is experiencing a non-fatal fault, which may be causing degraded performance.                                  |
+| FAULTED   | 2         | An unrecoverable error has occurred. The device cannot be opened.                                                         |
+| OFFLINE   | 2         | The device has been taken offline by the administrator.                                                                   |
+| REMOVED   | 2         | The device was physically removed while the system was running.                                                           |
+| UNAVAIL   | 2         | The device cannot be opened because the system is currently running a resilvering or scrubbing operation.                 |
+| SUSPENDED | 2         | The device is inaccessible, possibly because the system is in the process of resilvering or scrubbing the device.         |
+| UNKNOWN   | 3         | Volume is in an unknown state. Please report this as an issue on [GitHub](https://github.com/Klintrup/check_zpool/issues) |
 
 ## Compatibility
 
