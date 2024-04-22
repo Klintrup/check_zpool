@@ -15,6 +15,7 @@ in a box, and output the failed volumes if any such exist.
 ## Syntax
 
 ### Direct/integrate
+
 ```bash
 check_zpool.sh [email] [email]
 ```
@@ -26,7 +27,7 @@ an array reports an error.
 ### Cron
 
 ```bash
-0 6 * * * root /path/to/check_zpool.sh first.user@organisation.com second.user@organisation.com 
+0 6 * * * root /path/to/check_zpool.sh first.user@organisation.com second.user@organisation.com
 ```
 
 This runs the script at 6 AM day and sends out an email if any of the zpools in the system has a status other than "online"
