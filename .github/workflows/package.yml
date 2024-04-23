@@ -26,3 +26,4 @@ jobs:
         with:
           fpm_args: './build'
           fpm_opts: "--verbose -t deb -p check_zpool-${version}.deb --depends zfsutils-linux --version 1.0.0"
+      - run: ls -l build
