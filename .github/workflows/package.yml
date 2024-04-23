@@ -20,6 +20,7 @@ jobs:
       md-any-changed:    ${{ steps.changed-files-md.outputs.any_changed }}
     steps:
       - uses: actions/checkout@v4
+      - run: mkdir build
       - name: action-fpm
         uses: bpicode/github-action-fpm@v0.9.3
         with:
