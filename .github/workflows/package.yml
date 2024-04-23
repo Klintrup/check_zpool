@@ -1,0 +1,25 @@
+on:
+    pull_request:
+      branches: [ "main" ]
+
+name: package
+
+permissions:
+  contents: read
+
+jobs:
+  build-packages:
+    name: Build packages
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            target: [deb, rpm, pkg]
+    env:
+        version: ${{ github.sha }}
+    steps:
+        - uses: actions/checkout@v4
+        - name: action-fpm
+          uses: Klintrup/github-action-fpm@update-action
+          with:
+            fpm_opts: "--verbose -t ${{ matrix.target }} -p check_zpool-${version}.${{ matrix.target }} --depends zfsutils-linux --version 1.0.0"
+        - run: ls -l
