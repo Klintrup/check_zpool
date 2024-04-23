@@ -1,0 +1,31 @@
+.TH check_zpool 8
+.SH NAME
+Simple check-script for Cron/Zabbix/NRPE/Nagios to get the status of all zpool volumes
+.SH SYNOPSIS
+.B check_zpool
+[email]
+[email]
+.SH DESCRIPTION
+.B check_zpool
+checks status of all ZFS pools in a system and either outputs the status to stdout or sends an email to one or more recipient(s)
+.SH OPTIONS
+.TP
+.BR \fBemail\fR
+Set one or more email addresses to notify of any issues.
+.SH USAGE
+If no email address is specified, status is printed to stdout.
+.SH EXIT STATUS
+.TP
+0
+everything is normal
+.TP
+1
+a warning status occured
+.TP
+2
+a critical error has occured, data is unaccessible
+.TP
+3
+an unknown error has happened
+.Sh SEE ALSO
+.Xr zpool 8 ,
