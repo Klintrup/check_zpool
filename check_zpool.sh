@@ -28,18 +28,14 @@ OKSTRING=""
 #   - Valid email addresses are written to stdout
 #   - Invalid email addresses are written to stderr along with an error message
 validate_email() {
-  if [ -n "${_validate_email__input}" ]; then
-    echo "_validate_email__input variable is already set" >&2
-    exit 1
-  fi
-  for _validate_email__input in "${@}"; do
-    if ! echo "${_validate_email__input}" | grep -qE '^[a-zA-Z0-9._%+-]{1,}@[a-zA-Z0-9.-]{1,}\.[a-zA-Z]{2,}$'; then
-      echo "${_validate_email__input} is not a valid email address" >&2
+  for _check_zpool__validate_email__input in "${@}"; do
+    if ! echo "${_check_zpool__validate_email__input}" | grep -qE '^[a-zA-Z0-9._%+-]{1,}@[a-zA-Z0-9.-]{1,}\.[a-zA-Z]{2,}$'; then
+      echo "${_check_zpool__validate_email__input} is not a valid email address" >&2
     else
-      echo "${_validate_email__input}"
+      echo "${_check_zpool__validate_email__input}"
     fi
   done
-  unset _validate_email__input
+  unset _check_zpool__validate_email__input
 }
 
 # Function to set the error code
@@ -109,7 +105,6 @@ get_zpool_devices() {
   fi
 }
 
-
 # Checks the health status of each device in a ZFS pool.
 # Iterates over each device obtained from the `get_zpool_devices` function,
 # and retrieves the health status using the `zpool list` command.
@@ -163,15 +158,20 @@ done
 # Checks the status of zpool volumes on the current host and sends an email notification if there are any errors.
 # If the script is called with an argument, it assumes that it is being run from cron, and sends an email notification to the specified recipients.
 # If the script is called without an argument, it assumes that it is being run from a monitoring system, prints the status of the zpool volumes to the console, and exits with the corresponding error code.
-if [ "${1}" ]; then
+if [ "${#}" -ge "1" ]; then
   if [ "${ERRORSTRING}" ] || [ "${WARNINGSTRING}" ]; then
+    if ! command -v mail >/dev/null 2>&1; then
+      echo "mail command is not installed" >&2
+      ERR=$(set_error_code "${ERR}" "unknown")
+      exit "${ERR}"
+    fi
     recipients=$(validate_email "${@}")
     (
       echo "zpool volumes on $(hostname -s) has errors:"
       echo ""
       echo "${ERRORSTRING} ${WARNINGSTRING} ${OKSTRING}" | sed s/"^\/ "// | sed -E "s%\/ %\n%g"
       echo ""
-      echo "This is an automated message, please do not reply."
+      echo "This is an automated message, do not reply."
     ) | mail -s "$(hostname -s): ${0} reports errors" -E "${recipients}"
   fi
 else
@@ -180,6 +180,7 @@ else
     exit "${ERR}"
   else
     echo no zpool volumes found
-    exit 3
+    ERR=$(set_error_code "${ERR}" "unknown")
+    exit "${ERR}"
   fi
 fi
