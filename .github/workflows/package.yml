@@ -20,8 +20,7 @@ jobs:
         - uses: actions/checkout@v4
 #        - run: mkdir build
         - name: action-fpm
-          uses: bpicode/github-action-fpm@v0.9.3
+          uses: Klintrup/github-action-fpm@update-action
           with:
-            fpm_args: "."
             fpm_opts: "--verbose -t ${{ matrix.target }} -p check_zpool-${version}.${{ matrix.target }} --depends zfsutils-linux --version 1.0.0"
-        - run: ls -l 
+        - run: ls -l
