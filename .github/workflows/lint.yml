@@ -25,13 +25,13 @@ jobs:
           fetch-depth: 0
       - name: Get changed SH files
         id: changed-files-sh
-        uses: tj-actions/changed-files@v46
+        uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 # v46
         with:
           files: |
             **.sh
       - name: Get changed MD files
         id: changed-files-md
-        uses: tj-actions/changed-files@v46
+        uses: tj-actions/changed-files@2f7c5bfce28377bc069a65ba478de0a74aa0ca32 # v46
         with:
           files: |
              **.md
