@@ -1,0 +1,9 @@
+-s dir
+--name check_zpool
+--license "Apache 2.0"
+--architecture all
+--depends bash
+--description "Simple check-script for Cron/Zabbix/NRPE/Nagios to get the status of all zpool volumes"
+--url "https://github.com/Klintrup/check_zpool"
+--maintainer "Søren Klintrup <github@klintrup.dk>"
+check_zpool.sh=/usr/bin/check_zpool man/check_zpool.8=/usr/share/man/man8/check_zpool.1
